@@ -1,6 +1,18 @@
+'use client';
 import Image from "next/image";
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(() => {
+    fetch('/api/time').then(res =>res.json()).then(data => {
+      setCurrentTime(data.time);
+    });
+    console.log('time: ' + currentTime);
+  }, []);
+  
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -17,6 +29,13 @@ export default function Home() {
             Get started by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
               src/app/page.tsx
+            </code>
+            .
+          </li>
+          <li className="mb-2 tracking-[-.01em]">
+            The current time is {" "}
+            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
+              {currentTime}
             </code>
             .
           </li>
